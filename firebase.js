@@ -3,6 +3,8 @@
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
 require('dotenv').config();
 //console.log(process.env);
 
@@ -18,7 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-//
+const auth = getAuth(app);
 const firestore = getFirestore(app);
 
-export { firestore };
+export { auth, firestore };

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Box, Stack, Typography, Button, Modal, TextField } from '@mui/material'
+import { Box, Stack, Typography, Button, Modal, TextField, Container } from '@mui/material'
 import { firestore } from '@/firebase'
 import {
   collection,
@@ -19,7 +19,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
+  height: 500,
   bgcolor: 'white',
   border: '2px solid #000',
   boxShadow: 24,
@@ -107,6 +108,15 @@ export default function Home() {
       flexDirection={'column'}
       alignItems={'center'}
       gap={2}
+      sx={{
+        width: '100%',
+        height: '100vh',  // Adjust the height as needed
+        backgroundImage: `url('/images/background.jpeg')`,
+        backgroundSize: 'cover',  // Adjust how the image fits the container
+        backgroundPosition: 'center',  // Center the image
+        backgroundRepeat: 'no-repeat',  // Prevent the image from repeating
+        
+      }}
     >
       {/* Modal for adding a new item */}
       <Modal
@@ -119,7 +129,7 @@ export default function Home() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add Item
           </Typography>
-          <Stack width="100%" direction={'row'} spacing={2}>
+          <Stack width="50%" direction={'row'} spacing={2}>
             <TextField
               id="outlined-basic"
               label="Item"
@@ -148,23 +158,32 @@ export default function Home() {
       </Button>
 
       {/* Search bar and button */}
-      <Box border={'1px solid #333'}>
+      <Box 
+           width="80%"
+           height="70vh"
+           border="1px solid #333"
+           display="flex"
+           flexDirection="column"
+           gap={2}
+           padding={2}    
+        > 
         <Box
-          width="800px"
-          height="100px"
-          bgcolor={'#ADD8E6'}
-          display={'flex'}
-          justifyContent={'center'}
-          alignItems={'center'}
+        width="100%"
+        height="auto"
+        bgcolor="#ADD8E6"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        padding={2}
         >
-          <Typography variant={'h2'} color={'#333'} textAlign={'center'}>
+          <Typography variant={'h3'} color={'#333'} textAlign={'center'}>
             Inventory Items
           </Typography>
         </Box>
-        <Stack width="800px" height="300px" spacing={2} overflow={'auto'}>
+        <Stack width="800px" height="300px" flexGrow={1} spacing={2} overflow={'auto'} color={'#333'}>
           
            {/* TextField for search input */}
-
+           <Stack direction="row" spacing={2} marginBottom={2}>
           <TextField
             id="search-bar"
             label="Search Inventory"
@@ -172,6 +191,26 @@ export default function Home() {
             fullWidth
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            sx={{
+              input: { color: 'white' }, // Changes the text color to white
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'white', // Changes the border color to white
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Changes the border color on hover to white
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Changes the border color when focused to white
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'white', // Changes the label color to white
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Keeps the label color white when focused
+              },
+            }}
           />
 
           {/* Button to trigger search */}
@@ -180,23 +219,27 @@ export default function Home() {
             Search
           </Button>
 
+        </Stack>
           {/* Display inventory items */}
 
           {inventory.map(({ name, quantity }) => (
             <Box
               key={name}
               width="100%"
-              minHeight="150px"
+              minHeight="50px"
+              minWidth={'100px'}
               display={'flex'}
               justifyContent={'space-between'}
               alignItems={'center'}
               bgcolor={'#f0f0f0'}
               paddingX={5}
+           
+            
             >
-              <Typography variant={'h3'} color={'#333'} textAlign={'center'}>
+              <Typography variant={'h5'} color={'#333'} textAlign={'center'}>
                 {name.charAt(0).toUpperCase() + name.slice(1)}
               </Typography>
-              <Typography variant={'h3'} color={'#333'} textAlign={'center'}>
+              <Typography variant={'h5'} color={'#333'} textAlign={'center'}>
                 Quantity: {quantity}
               </Typography>
               <Stack direction={'row'} spacing={1}>
